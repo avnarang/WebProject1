@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script
+        src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+        crossorigin="anonymous">
+    </script>
+    <style>
+        body{
+            background-image: url(picsP/profile_back.jpeg);
+            background-size: cover;
+            background-repeat: no-repeat;
+            height: 100%;
+            width: 100%;
+            overflow-x:hidden;
+        }
+        .profBtns{
+            color:white;background-color: rgba(44, 27, 44, 0.411);
+        }
+        .profBtns:hover{
+          color:white;background-color: rgba(44, 27, 44, 0.411); 
+        }
+        
+    </style>
+    <script>
+        function doShowPic(refFile, refImg) {
+          const [file] = refFile.files;
+          if (file) {
+            refImg.src = URL.createObjectURL(file);
+          }
+        }
+        function doEnable(check, sbtn, ubtn) {
+         if (check.checked == true) {
+          sbtn.disabled = false;
+          ubtn.disabled = false;
+          } else {
+          sbtn.disabled = true;
+          ubtn.disabled = true;
+        }
+        }
+        $(document).ready(function(){
+            $("#search").click(function(){
+            let obj={
+                url:"/fetch-details",
+                data:{
+                    email:$("#custEmail").val(),
+                }
+            }
+            $.ajax(obj).done(function(resultJsonAry){
+                //alert(JSON.stringify(resultJsonAry));
+
+                $("#custName").val(resultJsonAry[0].name);
+                $("#contact").val(resultJsonAry[0].contact);
+                $("#address").val(resultJsonAry[0].address);
+                $("#city").val(resultJsonAry[0].city);
+                $("#state").val(resultJsonAry[0].state);
+                $("#preview").prop("src","uploads/" + resultJsonAry[0].picname);
+                $("#ihdn").val(resultJsonAry[0].picname);
+                //alert(resultJsonAry[0].picname);
+            }).fail(function(err){
+                alert("Error"+ err);
+            })
+
+        })
+        });
+    </script>
+</head>
+<!-- <body>
+   
+        <div style="height:70% ; width: 90%; background-color: rgba(0, 0, 0, 0.383); justify-content: center;" class="d-flex">
+            <div class="container border border-0">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3><center>
+                            Customer Profile
+                        </center></h3>
+                    </div>
+                </div>
+                <form action="" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="hdn" id="ihdn"> like invisible textbox/label
+        
+                    <div class="row">
+                        <p>
+                            <div class="col-md-8">
+                                <label for="custEmail" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="custEmail" name="custEmail" value="">
+                            </div>
+                            <div class="col-md-2">
+                                <label for="search" class="form-label"> </label>
+                                <br>
+                                <input type="button" class="profBtns btn" value="Search" name="search" id="search">
+                            </div>
+                        </p> 
+                    </div>  
+                    <div class="row">
+                        <p>
+                            <div class="col-md-4">
+                                <label for="custName" class="form-label">Name</label>
+                                <input type="text" class="form-control" id="custName" name="custName" value="" >
+                            </div>
+                            <div class="col-md-4">
+                                <label for="contact" class="form-label">Contact Number</label>
+                                <input type="text" class="form-control" id="contact" name="contact" value="">
+                            </div>
+                        </p>
+                    </div>
+                    <p>
+                        <div class="col-8">
+                            <label for="address" class="form-label">Address</label>
+                            <input type="text" class="form-control" id="address" name="address" value="">
+                        </div>
+                    </p>
+                    <p>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label for="city" class="form-label">City</label>
+                                <input type="text" class="form-control" id="city" name="city" value="">
+                            </div>
+                            <div class="col-sm-4">
+                                <label for="state" class="form-label">State</label>
+                                <select id="state" class="form-select" name="state" value="">
+                                    <option >Choose...</option>
+                                    <option value="Andhra Pradesh">Andhra Pradesh</option>
+                  <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                  <option value="Assam">Assam</option>
+                  <option value="Bihar">Bihar</option>
+                  <option value="Chhattisgarh">Chhattisgarh</option>
+                  <option value="Goa">Goa</option>
+                  <option value="Gujarat">Gujarat</option>
+                  <option value="Haryana">Haryana</option>
+                  <option value="Himachal Pradesh">Himachal Pradesh</option>
+                  <option value="Jammu & Kashmir">Jammu & Kashmir</option>
+                  <option value="Jharkhand">Jharkhand</option>
+                  <option value="Karnataka">Karnataka</option>
+                  <option value="Kerala">Kerala</option>
+                  <option value="Madhya Pradesh">Madhya Pradesh</option>
+                  <option value="Maharashtra">Maharashtra</option>
+                  <option value="Manipur">Manipur</option>
+                  <option value="Meghalaya">Meghalaya</option>
+                  <option value="Mizoram">Mizoram</option>
+                  <option value="Nagaland">Nagaland</option>
+                  <option value="Odisha">Odisha</option>
+                  <option value="Punjab">Punjab</option>
+                  <option value="Rajasthan">Rajasthan</option>
+                  <option value="Sikkim">Sikkim</option>
+                  <option value="Tamil Nadu">Tamil Nadu</option>
+                  <option value="Telangana">Telangana</option>
+                  <option value="Tripura">Tripura</option>
+                  <option value="Uttar Pradesh">Uttar Pradesh</option>
+                  <option value="Uttrakhand">Uttrakhand</option>
+                  <option value="West Bengal">West Bengal</option>
+                                </select>
+                            </div>
+                           
+                        </div>
+                    </p>
+                    <p>
+                        <div class="row">
+                        
+                            <div class="col-md-4">
+                                <label for="ppic" >Profile Picture</label>
+                                <input type="file" class="form-control" id="ppic"  name="ppic" onchange="doShowPic(this, preview)">
+        
+                            </div>
+                            <div class="col-md-4">
+                                <img src="" id="preview" alt="" width="100" height="100">  
+                            </div>
+                        
+                        </div>
+                    </p>
+                    <p>
+                        <div class="col-12">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="terms" name="terms" value="">
+                                <label class="form-check-label" for="terms">
+                                    Terms and Conditions
+                                </label>
+                            </div>
+                        </div> 
+                    </p>
+                    <br>
+                    <br>
+                    <p>
+                        <center>
+                            <input type="submit" class="btn btn-secondary" value="Save Details" formaction="/custProfile-save">
+                            <input type="submit" class="btn btn-secondary" value="Modify Details" formaction="modify-details">
+                        </center>
+                    </p>        
+                </form>
+            </div>
+        </div>
+       
+    </div>
+  
+    
+</body> -->
+<body>
+    <br />
+    <div class="d-flex" style="justify-content: center; flex-direction: column">
+      <div class="d-flex" style="justify-content: center">
+        <h1 style="color: #25293a; font-weight: bold">Profile</h1>
+      </div>
+
+      <div class="d-flex" style="justify-content: center">
+        <div style="width: 210px; height:30%">
+          <img
+            src="picsP/profile_cust.jpeg"
+            id="preview"
+            height="200vw"
+            class="form-control boxes"
+            style="border-radius: 50%"
+          />
+        </div>
+      </div>
+      <br />
+      <div
+        class="d-flex"
+        style="justify-content: space-around; flex-wrap: wrap"
+      >
+        <div class="col-md-8" style="background-color: #46585f71">
+          <form
+            class="col-12"
+            action=""
+            method="post"
+            enctype="multipart/form-data"
+          >
+            <input type="hidden" id="hdn" name="hdn" />
+            <div
+              class="d-flex"
+              style="justify-content: space-around; flex-wrap: wrap; align-items: center;"
+            >
+              <div class="col-md-6">
+                <label for="custEmail" class="form-label">Email</label>
+                <input
+                  type="email"
+                  class="form-control boxes"
+                  id="custEmail"
+                  name="custEmail"
+                  required
+                />
+              </div>
+              <div class="col-md-2 " >
+                <label for="search" class="form-label">&nbsp; </label>
+                                
+                                <input type="button" class="profBtns btn form-control" value="Search" name="search" id="search">
+              </div>
+              
+              <div class="col-md-2">
+                <label for="ppic" class="form-label">&nbsp;</label>
+                
+                <button
+                  type="button"
+                  for="ppic"
+                  class="profBtns btn form-control"
+                  id="profbutton"
+                  style="border: 0px; height: 38px"
+                >
+                <label for="ppic" > Picture</label>
+              
+                <input type="file" class="profBtns btn form-control" id="ppic"  name="ppic" onchange="doShowPic(this, preview)" style="display: none;">
+
+                </button>
+              </div>
+            </div>
+
+            <br />
+            <div
+              class="d-flex"
+              style="justify-content: space-around; flex-wrap: wrap"
+            >
+              <div class="col-6">
+                <label for="custName" class="form-label">Name</label>
+                <input
+                  type="text"
+                  class="form-control boxes"
+                  id="custName"
+                  name="custName"
+                  required
+                />
+              </div>
+              <div class="col-5">
+                <label for="contact" class="form-label">Contact Number</label>
+                <input
+                  type="text"
+                  class="form-control boxes"
+                  id="contact"
+                  name="contact"
+                  required
+                />
+              </div>
+            </div>
+
+            <br />
+            <div
+              class="d-flex"
+              style="margin-left: 18px; flex-wrap: wrap"
+            >
+              <div class="col-11">
+                <label for="address" class="form-label">Address</label>
+                <input
+                  type="text"
+                  class="form-control boxes"
+                  id="address"
+                  name="address"
+                  required
+                />
+              </div>
+            </div>
+
+            <br />
+            <div
+              class="d-flex"
+              style="justify-content: space-around; flex-wrap: wrap"
+            >
+              <div class="col-6">
+                <label for="city" class="form-label">City</label>
+                <input
+                  type="text"
+                  class="form-control boxes"
+                  id="city"
+                  name="city"
+                  required
+                />
+              </div>
+              <div class="col-5">
+                <label for="state" class="form-label">State</label>
+                <select
+                  id="state"
+                  class="form-select boxes"
+                  name="state"
+                  required
+                >
+                  <option value="none">Choose...</option>
+                  <option value="Andhra Pradesh">Andhra Pradesh</option>
+                  <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                  <option value="Assam">Assam</option>
+                  <option value="Bihar">Bihar</option>
+                  <option value="Chhattisgarh">Chhattisgarh</option>
+                  <option value="Goa">Goa</option>
+                  <option value="Gujarat">Gujarat</option>
+                  <option value="Haryana">Haryana</option>
+                  <option value="Himachal Pradesh">Himachal Pradesh</option>
+                  <option value="Jammu & Kashmir">Jammu & Kashmir</option>
+                  <option value="Jharkhand">Jharkhand</option>
+                  <option value="Karnataka">Karnataka</option>
+                  <option value="Kerala">Kerala</option>
+                  <option value="Madhya Pradesh">Madhya Pradesh</option>
+                  <option value="Maharashtra">Maharashtra</option>
+                  <option value="Manipur">Manipur</option>
+                  <option value="Meghalaya">Meghalaya</option>
+                  <option value="Mizoram">Mizoram</option>
+                  <option value="Nagaland">Nagaland</option>
+                  <option value="Odisha">Odisha</option>
+                  <option value="Punjab">Punjab</option>
+                  <option value="Rajasthan">Rajasthan</option>
+                  <option value="Sikkim">Sikkim</option>
+                  <option value="Tamil Nadu">Tamil Nadu</option>
+                  <option value="Telangana">Telangana</option>
+                  <option value="Tripura">Tripura</option>
+                  <option value="Uttar Pradesh">Uttar Pradesh</option>
+                  <option value="Uttrakhand">Uttrakhand</option>
+                  <option value="West Bengal">West Bengal</option>
+                </select>
+              </div>
+            </div>
+
+            <br /><br />
+
+            <div class="d-flex" style="justify-content: space-evenly;">
+              <div >
+                <input
+                  class="form-check boxes"
+                  type="checkbox"
+                  id="terms"
+                  onchange="doEnable(this,sbtn,ubtn)"  
+                  style="height: 20px; width: 20px" 
+                />
+                <p style="color: #25293a; font-weight: bold">
+                  Terms and Conditions
+                </p>
+              </div>
+
+              <div>
+                <p>
+                        <center>
+                            <input type="submit" class="profBtns btn" value="Save Details" formaction="/custProfile-save" id="sbtn " >
+                            <input type="submit" class="profBtns btn" value="Modify Details" formaction="modify-details" id="ubtn " >
+                        </center>
+                    </p>   
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

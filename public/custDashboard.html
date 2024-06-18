@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script
+        src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+        crossorigin="anonymous">
+    </script>
+    <style>
+        body{
+            background-image:url(picsP/Pastel\ Gradient\ Motivational\ Quotes\ Desktop\ Wallpaper.png);
+            background-repeat: no-repeat;
+            background-size: cover;
+            
+        }
+        .btn{
+            color: white;
+        }
+        .btn:hover{
+            color: white;
+        }
+        
+    </style>
+    <script>
+        $(document).ready(function(){
+            $("#postTask").click(function(){
+                let obj={
+                    url:"/task-details",
+                    data:{
+                    
+                        email:$("#reqEmail").val(),
+                        taskCategory:$("#tasks").val(),
+                        location:$("#location").val(),
+                        address:$("#reqAddress").val(),
+                        city:$("#reqCity").val(),
+                        duration:$("#upto").val(),
+                        workDetails:$("#work").val(),
+                    }
+                }
+                $.ajax(obj).done(function(resp){
+                    alert(resp);
+                    
+
+                }).fail(function(err){
+                    alert("Error:"+err);
+                })
+            })
+            $("#home").click(function(){
+                let obj={
+                    url:"/auto-fill",
+                    data:{
+                        email:$("#reqEmail").val(),
+                    }
+                }
+                $.ajax(obj).done(function(resultJsonAry){
+                    $("#reqAddress").val(resultJsonAry[0].address);
+                    $("#reqCity").val(resultJsonAry[0].city);
+                }).fail(function(err){
+                    alert("Error:"+err);
+                })
+            })
+            $("#changePwd").click(function(){
+                let obj={
+                    url:"/change-password",
+                    data:{
+                        email:$("#setEmail").val(),
+                        oldPwd:$("#setPwd").val(),
+                        newPwd:$("#setNewPwd").val(),
+                    }
+                }
+                $.ajax(obj).done(function(resp){
+                    alert(resp);
+                }).fail(function(err){
+                    alert("Error"+err);
+                })
+            })
+            $("#eye1").click(function () {
+                if ($("#setPwd").prop("type") == "password") {
+                    $("#setPwd").prop("type", "text");
+                    $("#eye1").addClass("fa-eye").removeClass("fa-eye-slash");
+                } else {
+                    $("#setPwd").prop("type", "password");
+                    $("#eye1").addClass("fa-eye-slash").removeClass("fa-eye");
+                 }
+            });
+            $("#eye2").click(function () {
+                if ($("#setNewPwd").prop("type") == "password") {
+                    $("#setNewPwd").prop("type", "text");
+                    $("#eye2").addClass("fa-eye").removeClass("fa-eye-slash");
+                } else {
+                    $("#setNewPwd").prop("type", "password");
+                    $("#eye2").addClass("fa-eye-slash").removeClass("fa-eye");
+                 }
+            });
+        
+            $("#goProfileC").click(function(){
+                window.location="/customer-profile";
+
+            })
+            $("#goFinder").click(function(){
+                window.location="/provider-finder";
+
+            })
+            $("#reqManager").click(function(){
+                window.location="/req-manager";
+
+            })
+
+        });
+    </script>
+</head>
+<body>
+    <div>
+        <nav
+      class="navbar navbar-expand-lg border-bottom"
+      style="background-color: rgba(0, 0, 0, 0); border-bottom: white 1px;"
+      id="home"
+    >
+      <div class="container-fluid">
+        <button
+          class="navbar-toggler bg-light"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"     
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse d-md-flex justify-content-md-end" id="navbarSupportedContent">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <!-- <a href="#modalSettings" class="nav-link active" aria-current="page" style="color: white;">Settings</a> -->
+                    <input type="button" class="btn" value="Settings" data-bs-toggle="modal" data-bs-target="#modalSettings">
+                </li>
+                <li class="nav-item">
+                    <a href="index.html" target="screen" class="nav-link active" aria-current="page" style="color: white;">Home</a>
+                </li>
+                <li>
+                    <a href="/index.html#aboutus" target="screen" class="nav-link active" aria-current="page" style="color: white;">About Us</a>
+                </li>
+            </ul>
+            
+        </div>
+        </div>
+      </div>
+    </nav>
+    <br><br>
+    <div>
+        <center>
+            <div class="d-flex" style="height: 32vw; width: 80vw; justify-content: flex-start; align-items: center; flex-wrap: wrap;background-color: black; box-shadow: 10px 10px #46337285;">
+                <div style="height: 35vw; width: 80vw; background-image: url(picsP/custDashfinal.jpeg);background-size: contain; background-repeat: no-repeat;">
+                </div>
+            </div>
+        
+    </center>
+        <br><br>    
+
+        <div class="d-flex" style="justify-content: space-evenly;flex-wrap: wrap;align-items: center; ">
+            <div class="card mt-3" style="width: 18rem;height:20rem; background-color: #463372 ; border-radius: 10%;box-shadow: 10px 10px #46337238;">
+                <center>
+                <i class="fa-solid fa-user" style="font-size: 150px;color: #EBCBC4; line-height:15rem;"></i>
+            
+                <div class="card-body">
+                    <input type="button" class="btn" value="Profile" id="goProfileC">
+                </div>
+            </center>
+            </div>
+            
+            <div class="card mt-3" style="width: 18rem;height:20rem; background-color:  #463372 ; border-radius: 10%; box-shadow: 10px 10px #46337238;">
+                <center>
+                    <i class="fa-solid fa-pen-to-square" style="font-size: 150px; color: #EBCBC4;line-height:15rem;"></i>
+                    <div class="card-body">
+                        <input type="button" class="btn" value="Post Requirement" data-bs-toggle="modal"
+                        data-bs-target="#modalPosts">
+                    </div>
+                </center>
+            </div>
+           
+            <div class="card mt-3" style="width: 18rem;height:20rem; background-color: #463372; border-radius: 10%;box-shadow: 10px 10px #46337238;">
+                <center>
+                <i class="fa-solid fa-magnifying-glass" style="font-size: 150px;color: #EBCBC4; line-height:15rem;"></i>
+            
+                <div class="card-body">
+                    <input type="button" class="btn" value="Search Service Provider" id="goFinder">
+                </div>
+            </center>
+            </div>
+           
+            <div class="card mt-3" style="width: 18rem;height:20rem; background-color:  #463372; border-radius: 10%;box-shadow: 10px 10px #46337238;">
+                <center>
+                    <div class="card-body">
+                        <i class="fa-solid fa-list-check" style="font-size: 150px;color: #EBCBC4; line-height:15rem;"></i>
+                        <input type="button" class="btn" value="Requirement Manager" id="reqManager">
+                    </div>
+                </center>
+            </div>
+            
+        </div>
+        <br><br>
+    </div>
+        
+            
+        <!--Post tasks-->
+        <div class="modal fade" id="modalPosts" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true" style="background-image: url(picsP/Pastel\ Gradient\ Motivational\ Quotes\ Desktop\ Wallpaper.png); background-size: cover; background-repeat: no-repeat;">
+            <div class="modal-dialog">
+                <div class="modal-content" style="background-color:#dbd1e4;">
+                    <div class="modal-header" style="background-color:#1a1857aa;">
+                        <h1 class="modal-title fs-5 text-white" id="ModalLabel ">Post Requiremnets</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" style="background-color:#c6bddb38;">
+                        <form>
+                            <div class="mb-3"  style="color: #12486B;">
+                                <label for="reqEmail" class="form-label">Email address</label>
+                                <input type="email" class="form-control" id="reqEmail" name="email" required>
+                            
+                               
+                            </div>
+                            <div class="mb-3"  style="color: #12486B;">
+                                <label for="tasks" class="form-label">Tasks</label>
+                                <select id="tasks" class="form-select" name="tasksToDo" value="" required>
+                                <option >Type of Job...</option>
+                                <option value="Plumber">Plumber</option>
+                                <option value="Electrician">Electrician</option>
+                                <option value="House Work">Maid</option>
+
+                                 </select>
+                            </div>
+                            <div>
+                                <label for="location"  style="color: #12486B;">Location:</label>&nbsp;&nbsp;&nbsp;
+                                <input type="radio" id="home" name="opt">Home
+                                <input type="radio" id="other" name="opt">Other
+                            </div>
+                            <div class="mb-3"  style="color: #12486B;">
+                                <label for="reqAddress" class="form-label">Address</label>
+                                <div class="row">
+                                    <div class="mb-3">
+                                        <input type="text" class="form-control" id="reqAddress" name="address" required> 
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3"  style="color: #12486B;">
+                                <label for="reqCity" class="form-label">City</label>
+                                <div class="row">
+                                    <div class="mb-3">
+                                        <input type="text" class="form-control" id="reqCity" name="city" required> 
+                                    </div>
+                                    
+                                </div>
+                            </div>  
+                            <div class="mb-3"  style="color: #12486B;">
+                                <label for="upto" class="form-label">Up to</label>
+                                <div class="row">
+                                    <div class="mb-3">
+                                        <input type="date" class="form-control" id="upto" name="upto" required> 
+                                    </div>
+                                    
+                                </div>
+                            </div> 
+                            <div>
+                                <label for="work" class="form-label"  style="color: #12486B;">Details of the Task</label>
+                                
+                                <div class="col-md-12"  style="color: #12486B;">
+                                    <input type="text" class="form-control"  id="work" required>
+                                </div>
+                          
+                            </div>
+                            <center>
+                                <div class="modal-footer" style="margin: auto; ">
+                                    
+                                        <input type="button" class="btn" id="postTask" value="Post Tasks" style="background-color: #1a1857aa;">
+                                    
+                                 </div>  
+                            </center>   
+                        </form>
+                    </div>
+                    
+                </div>
+            </div>        
+        </div>
+    <!--Settings-->
+    <div class="modal fade" id="modalSettings" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="background-image: url(picsP/Pastel\ Gradient\ Motivational\ Quotes\ Desktop\ Wallpaper.png); background-size: cover; background-repeat: no-repeat;">
+        <div class="modal-dialog">
+            <div class="modal-content" style="background-color:#dbd1e4;">
+                <div class="modal-header" style="background-color:#1a1857aa;">
+                    <h1 class="modal-title fs-5 text-white" id="exampleModalLabel ">Settings</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="background-color:#c6bddb38;">
+                    <form>
+                        <div class="mb-3" style="color: #12486B;">
+                            <label for="setEmail" class="form-label">Email Address</label>
+                            <input type="email" class="form-control" id="setEmail" name="setEmail">
+                        </div>
+                        <div class="mb-3" style="color: #12486B;">
+                            <label for="setPwd" class="form-label">Old Password</label>
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <input type="password" class="form-control" id="setPwd" name="setPwd"> 
+                                </div>
+                                <div class="col-md-2">
+                                    <i class="fa-solid fa-eye-slash fa-beat" id="eye1"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3" style="color: #12486B;">
+                            <label for="setNewPwd" class="form-label">New Password</label>
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <input type="password" class="form-control" id="setNewPwd" name="setNewPwd"> 
+                                </div>
+                                <div class="col-md-2">
+                                     <i class="fa-solid fa-eye-slash fa-beat" id="eye2"></i>
+                                </div>
+                            </div>
+                        </div>   
+                    </form>
+                </div>
+                <div class="modal-footer">
+                   <button type="button" class="btn" id="changePwd" style="background-color: #1a1857aa;">Done</button>
+               </div>
+            </div>   
+        </div>
+    </div>    
+</body>
+</html>

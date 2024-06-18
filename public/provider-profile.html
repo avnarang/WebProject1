@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script
+        src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+        crossorigin="anonymous">
+    </script>
+    <style>
+        body{
+            background-image: url(picsP/profile_back.jpeg);
+            background-size: cover;
+            background-repeat: no-repeat;
+            height: 100%;
+            width: 100%;
+            overflow-x:hidden;
+        }
+        .profBtns{
+            color:white;background-color: rgba(44, 27, 44, 0.411);
+        }
+        .profBtns:hover{
+          color:white;background-color: rgba(44, 27, 44, 0.411); 
+        }
+    </style>
+    <script>
+       function doShowPic(refFile, refImg) {
+          const [file] = refFile.files;
+          if (file) {
+            refImg.src = URL.createObjectURL(file);
+          }
+        }
+        function doEnable(check, sbtn, ubtn) {
+        if (check.checked == true) {
+          sbtn.disabled = false;
+          ubtn.disabled = false;
+        } else {
+          sbtn.disabled = true;
+          ubtn.disabled = true;
+        }
+      }
+        $(document).ready(function(){
+            $("#search").click(function(){
+                let obj={
+                    url:"/search-profile",
+                    data:{
+                        email:$("#servEmail").val()
+                    }
+                }
+                $.ajax(obj).done(function(resultJsonAry){
+                //alert(JSON.stringify(resultJsonAry));
+                $("#servName").val(resultJsonAry[0].name);
+                $("#contact").val(resultJsonAry[0].contact);
+                $("#gender").val(resultJsonAry[0].gender);
+                $("#taskCategory").val(resultJsonAry[0].category);
+                $("#firm").val(resultJsonAry[0].firm);
+                $("#website").val(resultJsonAry[0].website);
+                $("#location").val(resultJsonAry[0].location);
+                $("#since").val(resultJsonAry[0].since);
+                $("#workExp").val(resultJsonAry[0].otherInfo);
+                $("#preview").prop("src","uploads/" + resultJsonAry[0].picname);
+                $("#hdn").val(resultJsonAry[0].picname);
+                //alert(resultJsonAry[0].picname);
+            }).fail(function(err){
+                alert("Error"+ err);
+            })
+            })
+            
+        });
+    </script>
+</head>
+<body>
+    <br>
+    <div class="d-flex" style="justify-content: center; flex-direction: column">
+        <div class="d-flex" style="justify-content: center">
+            <h1 style="color: #25293a; font-weight: bold">Profile</h1>
+        </div>
+        <div class="d-flex" style="justify-content: center">
+            <div style="width: 210px; height:30%">
+              <img
+                src="picsP/profile_cust.jpeg"
+                id="preview"
+                height="200vw"
+                class="form-control boxes"
+                style="border-radius: 50%"
+              />
+            </div>
+        </div>
+        <br />
+        <div
+        class="d-flex"
+        style="justify-content: space-around; flex-wrap: wrap"
+      >
+        <div class="col-md-8" style="background-color: #46585f71">
+          <form
+            class="col-12"
+            action=""
+            method="post"
+            enctype="multipart/form-data"
+          >
+            <input type="hidden" id="hdn" name="hdn" />
+
+            <div
+              class="d-flex"
+              style="
+                justify-content: space-around;
+                align-items: center;
+                flex-wrap: wrap;
+              "
+            >
+              <div class="col-6">
+                <label for="servEmail" class="form-label">Email</label>
+                <input
+                  type="email"
+                  class="form-control boxes"
+                  id="servEmail"
+                  name="servEmail"
+                  required
+                />
+              </div>
+              <div class="col-2">
+                <label for="search" class="form-label">&nbsp;</label>
+                <input
+                  type="button"
+                  class="profBtns btn"
+                  value="Search"
+                  id="search"
+                />
+              </div>
+              <div class="col-2">
+                <label for="ppic" class="form-label">&nbsp;</label>
+                <button
+                  type="button"
+                  for="ppic"
+                  class="profBtns btn"
+                  style="border: 0px; height: 38px"
+                >
+                  <label
+                    class=""
+                    for="ppic"
+                    id="ppic"
+                    >Picture</label
+                  >
+                  <input
+                    type="file"
+                    id="ppic"
+                    name="nppic"
+                    class="form-control"
+                    onchange="doShowPic(this,preview)"
+                    style="display: none"
+                  />
+                </button>
+              </div>
+            </div>
+            <br />
+
+            <div
+              class="d-flex"
+              style="
+                justify-content: space-around;
+                align-items: center;
+                flex-wrap: wrap;
+              "
+            >
+              <div class="col-4">
+                <label for="servName" class="form-label">Name</label>
+                <input
+                  type="text"
+                  class="form-control boxes"
+                  id="servName"
+                  name="servName"
+                  required
+                />
+              </div>
+              <div class="col-4">
+                <label for="contact" class="form-label">Contact Number</label>
+                <input
+                  type="text"
+                  class="form-control boxes"
+                  id="contact"
+                  name="contact"
+                  required
+                />
+              </div>
+              <div class="col-2">
+                <label for="gender" class="form-label">Gender</label>
+                <input
+                  type="text"
+                  class="form-control boxes"
+                  id="gender"
+                  name="gender"
+                  required
+                />
+              </div>
+            </div>
+            <br />
+
+            <div
+              class="d-flex"
+              style="
+                justify-content: space-around;
+                align-items: center;
+                flex-wrap: wrap;
+              "
+            >
+              <div class="col-3">
+                <label for="taskCategory" class="form-label">Type of Work</label>
+                <select id="taskCategory" name="taskCategory" class="form-control">
+                  <option value="Choose">Choose...</option>
+                  <option value="Plumber">Plumber</option>
+                  <option value="Electrician">Electrician</option>
+                  <option value="Carpenter">Carpenter</option>
+                  <option value="Mechanic">Mechanic</option>
+                  <option value="Interior">Interior</option>
+                  <option value="Gardener">Gardener</option>
+                  <option value="Labourer">Labourer</option>
+                  <option value="Welder">Welder</option>
+                  <option value="Maid">Maid</option>
+                </select>
+              </div>
+              <div class="col-3">
+                <label for="firm" class="form-label">Firm(If-Any)</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="firm"
+                  name="firm"
+                  value="None"
+                  required
+                />
+              </div>
+              <div class="col-4">
+                <label for="website" class="form-label">Website(If-Any)</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="website"
+                  name="website"
+                  value="None"
+                  required
+                />
+              </div>
+            </div>
+            <br />
+
+            <div
+              class="d-flex"
+              style="
+                justify-content: space-around;
+                align-items: center;
+                flex-wrap: wrap;
+              "
+            >
+              <div class="col-8">
+                <label for="location" class="form-label"
+                  >Location/Firm Address</label
+                >
+                <input
+                  type="text"
+                  class="form-control boxes"
+                  id="location"
+                  name="location"
+                  required
+                />
+              </div>
+              <div class="col-3">
+                <label for="since" class="form-label">Work Experience(years)</label>
+                <input
+                  type="text"
+                  class="form-control boxes"
+                  id="since"
+                  name="since"
+                  required
+                />
+              </div>
+            </div>
+            <br />
+
+            <div
+              class="d-flex"
+              style="
+                justify-content: space-around;
+                align-items: center;
+                flex-wrap: wrap;
+              "
+            >
+              <div class="col-11">
+                <label for="workExp" class="form-label"
+                  >Previous Work Experience</label
+                >
+                <textarea
+                  name="workExp"
+                  id="workExp"
+                  cols="137"
+                  rows="5"
+                  class="form-control"
+                  required
+                ></textarea>
+              </div>
+            </div>
+
+            <br /><br />
+            <center>
+                <input type="submit" class="profBtns btn" value="Save Profile" formaction="/servProfile-save" id="sbtn"> 
+                <input type="submit" class="profBtns btn" value="Edit Profile" formaction="/edit-profile" id="ubtn">
+            </center>
+            <br /><br />
+          </form>
+        </div>
+      </div>
+    </div>
+</body>
+</html>
+
+
+
+
+<!-- <div class="container border border-0">
+        <div class="row">
+            <div class="col-md-12">
+                <h3><center>
+                    Service Provider Profile
+                </center></h3>
+            </div>
+        </div>
+        <form action="" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="hdn" id="ihdn"> 
+
+            <div class="row">
+                <p>
+                    <div class="col-md-8">
+                        <label for="servEmail" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="servEmail" name="servEmail" value="">
+                    </div>
+                    <div class="col-md-2">
+                        <label for="search" class="form-label"> </label>
+                        <br>
+                        <input type="button" class="btn btn-primary" value="Search" name="search" id="search">
+                    </div>
+                </p> 
+            </div>  
+            <div class="row">
+                <p>
+                    <div class="col-md-4">
+                        <label for="servName" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="servName" name="servName" value="" >
+                    </div>
+                    <div class="col-md-4">
+                        <label for="contact" class="form-label">Contact Number</label>
+                        <input type="text" class="form-control" id="contact" name="contact" value="">
+                    </div>
+                    <div class="col-sm-4">
+                        <label for="gender" class="form-label">Gender</label>
+                        <input type="text" class="form-control" id="gender" name="gender" value="">
+                    </div>
+                </p>
+            </div>
+            <p>
+                <div class="col-8">
+                    <label for="address" class="form-label">Address</label>
+                    <input type="text" class="form-control" id="address" name="address" value="">
+                </div>
+            </p>
+            <p>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label for="taskCategory" class="form-label">Type of Service Provider</label>
+                        <select id="taskCategory" class="form-select" name="taskCategory" value="">
+                            <option >Choose...</option>
+                            <option value="Plumber">Plumber</option>
+                            <option value="Electrician">Electrician</option>
+                            <option value="House Work">House Work</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-4">
+                        <label for="firm" class="form-label">Firm (if any)</label>
+                        <input type="text" class="form-control" id="firm" name="firm" value="">
+                    </div>
+                    <div class="col-sm-4">
+                        <label for="website" class="form-label">Website of Firm (if any)</label>
+                        <input type="text" class="form-control" id="website" name="website" value="">
+                    </div>
+                </div>
+            </p>
+            <div class="row">
+                <p>
+                    <div class="col-md-4">
+                        <label for="location" class="form-label">Location/Firm Address</label>
+                        <input type="text" class="form-control" id="location" name="location" value="" >
+                    </div>
+                    <div class="col-md-4">
+                        <label for="since" class="form-label">Work Experience(years)</label>
+                        <input type="text" class="form-control" id="since" name="since" value="">
+                    </div>
+                </p>
+            </div>
+            <p>
+                <div class="row">
+                
+                    <div class="col-md-4">
+                        <label for="ppic" class="form-label">Profile Picture</label>
+                        <input type="file" class="form-control" id="ppic"  name="ppic" onchange="doShowPic(this, preview)">
+
+                    </div>
+                    <div class="col-md-4">
+                        <img src="" id="preview" alt="" width="100" height="100">  
+                    </div>
+                
+                </div>
+            </p>
+            <p>
+                
+                    
+                        <div class="col-md-8">
+                            <label for="workExp" class="form-label">Previous Work Experience </label>
+                            <input type="text" id="workExp" name="workExp" class="form-control" required>
+                        </div>
+                            
+                      
+                        
+                   
+                
+            </p>
+            <br>
+            <p>
+                <center>
+                    <input type="submit" class="btn btn-secondary" value="Save Profile" formaction="/servProfile-save">
+                    <input type="submit" class="btn btn-secondary" value="Edit Profile" formaction="/edit-profile">
+                </center>
+            </p>        
+        </form>
+    </div> -->
+    
